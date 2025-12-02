@@ -17,7 +17,7 @@ class NeonClient:
 
     def _ensure_tables(self):
         try:
-            # Environmental table (as you already had it)
+
             self.cur.execute("""
                 CREATE TABLE IF NOT EXISTS environmental_readings (
                     id SERIAL PRIMARY KEY,
@@ -65,10 +65,9 @@ class NeonClient:
         try:
             raw_ts = sec.get("timestamp")
             if not raw_ts:
-                # use now if module didn't provide a timestamp
+
                 raw_ts = datetime.utcnow().isoformat()
 
-            # store whole sec dict as metadata
             metadata = json.dumps(sec)
 
             self.cur.execute(
@@ -87,3 +86,4 @@ class NeonClient:
             self.conn.close()
         except Exception:
             pass
+
