@@ -118,7 +118,6 @@ class I2CLcd:
 
     def set_backlight(self, on: bool):
         self.backlight = bool(on)
-        # touching the expander applies the change
         self._exp(0x00)
 
 
@@ -623,3 +622,4 @@ class PiGuardianAll:
 if __name__ == "__main__":
     guardian = PiGuardianAll("config.json")
     guardian.start()
+
