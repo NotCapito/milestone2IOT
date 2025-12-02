@@ -11,26 +11,18 @@ import paho.mqtt.client as mqtt
 import board
 import adafruit_dht
 import subprocess
-# import digitalio   # <<< COMMENTED OUT (no PIR for now)
 import threading
 
-# Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Initialize the DHT device, with data pin connected to:
 dhtDevice = adafruit_dht.DHT11(board.D4, use_pulseio=False)
 
-# Feed names for each sensor type
 ENV_FEEDS = {
     "temperature": "temperature",
     "humidity": "humidity",
     "pressure": "pressure"
 }
-
-# --- Motion sensor disabled for testing ---
-# pir = digitalio.DigitalInOut(board.D6)
-# pir.direction = digitalio.Direction.INPUT
 
 class SensorSimulator:
     def __init__(self, config_file='config.json'):
@@ -52,7 +44,7 @@ class SensorSimulator:
             "MQTT_KEEPALIVE": 60,
             "devices": ["living_room_light", "bedroom_fan", "front_door", "garage_door"],
             "camera_enabled": True,
-            "capturing_interval": 15,  # shorter interval for testing
+            "capturing_interval": 15,  
             "flushing_interval": 10,
             "sync_interval": 300
         }
@@ -120,7 +112,7 @@ class SensorSimulator:
 
     def generate_security_data(self):
         """Security data (motion disabled, always capture an image)."""
-        motion_detected = True   # <<< FORCE motion = True for testing
+        motion_detected = True  
         smoke_detected = False
         image_path = None
         if self.config.get('camera_enabled', True):
@@ -229,3 +221,4 @@ class SensorSimulator:
 if __name__ == "__main__":
     simulator = SensorSimulator(config_file='./config.json')
     simulator.start()
+
