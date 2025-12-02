@@ -23,15 +23,12 @@ logger = logging.getLogger(__name__)
 class security_module:
     def __init__(self, config_file='config.json'):
         self.config = self.load_config(config_file)
-        # Initialize motion sensor (PIR on D6, HIGH when motion is detected)
         self.pir = digitalio.DigitalInOut(board.D6)
         self.pir.direction = digitalio.Direction.INPUT
 
-        # Image directory (created if missing)
         self.image_dir = Path(self.config.get("image_dir", "captured_images"))
         self.image_dir.mkdir(parents=True, exist_ok=True)
 
-        # Cooldown book-keeping for alerts (per alert type)
         self._last_alert_time = {}
         self._alert_cooldown = int(self.config.get("ALERT_COOLDOWN", 300))  # seconds
 
@@ -66,7 +63,6 @@ class security_module:
 
     def get_security_data(self):
         """Read PIR, optionally capture an image, and return security telemetry (no simulated smoke)."""
-        # No smoke sensor in Lab 8 baseline: set to False explicitly
         smoke_detected = False
         motion_detected = bool(self.pir.value)
 
