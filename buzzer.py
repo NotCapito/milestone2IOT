@@ -1,10 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
-# Use BCM pin numbering
 GPIO.setmode(GPIO.BCM)
 
-# Set up GPIO 18 as output
 BUZZER_PIN = 18
 GPIO.setup(BUZZER_PIN, GPIO.OUT)
 
@@ -28,3 +26,4 @@ except KeyboardInterrupt:
 finally:
     GPIO.cleanup()
     print("GPIO cleaned up. Test complete.")
+
