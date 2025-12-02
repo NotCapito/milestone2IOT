@@ -102,7 +102,6 @@ class I2CLcd:
 
     def set_backlight(self, on: bool):
         self.backlight = bool(on)
-        # touch expander to apply
         self._exp(0x00)
 
 # ---------------- Buzzer Controller ----------------
@@ -201,7 +200,6 @@ class DomiSafeAll:
     def __init__(self, cfg_path="config.json"):
         self.config = self._load_config(cfg_path)
 
-        # Existing architecture pieces
         self.mqtt_agent = None
         if MQTT_communicator:
             try:
@@ -486,3 +484,4 @@ class DomiSafeAll:
 if __name__ == "__main__":
     app = DomiSafeAll("config.json")
     app.start()
+
